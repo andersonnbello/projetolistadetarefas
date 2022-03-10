@@ -2,9 +2,11 @@ const inputTarefa = document.querySelector('#input');
 const botaoAdicionar = document.querySelector('#button-addon2');
 const ulTarefas = document.querySelector('#tarefas');
 
+//#region FUNÇÕES
+// Função de adicionar tarefas
  const adicionarTarefa = (textoInput) => {
     const div = document.createElement('div');
-    ulTarefas.appendChild(div)
+    ulTarefas.appendChild(div);
     div.innerHTML = `
     <li id="tarefa-nova">
     <p>${textoInput}</p>
@@ -15,11 +17,13 @@ const ulTarefas = document.querySelector('#tarefas');
     limparInput();
 };
 
+// Função para limpar o input
  const limparInput = () => {
     inputTarefa.value = "";
     inputTarefa.focus();
  };
 
+ // Função para salvar a lista de tarefas no LocalStorage
 const salvarTarefaLocalStorage = () => {
   const tarefasExistentes = ulTarefas.querySelectorAll('li')
   const listaDeTarefas = [];
@@ -28,21 +32,25 @@ const salvarTarefaLocalStorage = () => {
     let textoDaTarefa = tarefa.innerText;
     textoDaTarefa = textoDaTarefa.replace('Apagar', '').trim();
     listaDeTarefas.push(textoDaTarefa);
-  }
+  };
   const setLocalStorage = JSON.stringify(listaDeTarefas) ?? []
-  localStorage.setItem('db_tarefas', setLocalStorage)
-}
+  localStorage.setItem('db_tarefas', setLocalStorage);
+};
 
+// Função para recuperar os dados da lista no LocalStorage
 const getLocalStorage = () => { 
   const tarefasExistentes = localStorage.getItem('db_tarefas') ?? [];
   const listaDeTarefas = JSON.parse(tarefasExistentes)
 
   for(let tarefa of listaDeTarefas) {
-    adicionarTarefa(tarefa)
+    adicionarTarefa(tarefa);
   }
 }
 getLocalStorage();
+//#endregion
 
+//#region EVENTOS
+// Evento keypress (Enter) para adicionar as tarefas
 inputTarefa.addEventListener('keypress', function(event) {
   if(event.keyCode === 13) {
     if(!inputTarefa.value)return;
@@ -50,6 +58,7 @@ inputTarefa.addEventListener('keypress', function(event) {
   };
 });
 
+// Evento click no botao de apagar tarefa
 document.addEventListener('click', function(event) {
   const elClicado = event.target;
 
@@ -59,8 +68,10 @@ document.addEventListener('click', function(event) {
   };
 });
 
+// Evento de click no botão (adicionar nova tarefa)
 botaoAdicionar.addEventListener('click', function() {
   const tarefas = inputTarefa.value;
   if(!inputTarefa.value)return;
   adicionarTarefa(tarefas);
 });
+//#endregion
