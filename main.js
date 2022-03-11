@@ -40,7 +40,7 @@ const salvarTarefaLocalStorage = () => {
 // Função para recuperar os dados da lista no LocalStorage
 const getLocalStorage = () => { 
   const tarefasExistentes = localStorage.getItem('db_tarefas') ?? [];
-  const listaDeTarefas = JSON.parse(tarefasExistentes)
+  const listaDeTarefas = JSON.parse(tarefasExistentes);
 
   for(let tarefa of listaDeTarefas) {
     adicionarTarefa(tarefa);
